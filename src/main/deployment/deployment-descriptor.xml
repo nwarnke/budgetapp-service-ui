@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment-unit
+    xmlns="http://schemas.www.up.com/netcontrol/utility/nc-deployment-descriptor-5_0"
+    xmlns:uip="http://schemas.www.up.com/utility/common/user-id-permissions-1_0"
+    xmlns:env="http://schemas.www.up.com/change-management/common/environments-1_0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.www.up.com/netcontrol/utility/nc-deployment-descriptor-5_0 http://service-repository.www.uprr.com/soa/platform/rest/location/netcontrol/utility/nc-deployment-descriptor/nc-deployment-descriptor-5_0.xsd">
+    <name>neq/permanence</name>
+    <UPRR-system-grouping>NETCONTROL</UPRR-system-grouping>
+    <deployment-profile-name>FIXME: NEQ - permanence</deployment-profile-name>
+    <TLA>neq</TLA>
+    <environment type="DEVELOPMENT">
+        <deployment-target>
+            <cluster>
+                <type>JBOSS_EWS</type>
+                <name>NEQ-A</name>
+            </cluster>
+        </deployment-target>
+        <!-- SAMPLE: ADD any required resources
+        <dependent-resource-list>
+            <resource>
+                <service-consumed>
+                    <XMF-service>
+                        <name>error-code/find-error-code-descriptions/1.0</name>
+                        <consumer-user-id>dneq999</consumer-user-id>
+                   </XMF-service>
+                </service-consumed>
+            </resource>            
+        </dependent-resource-list>
+        -->
+        <exposed-feature-list>
+            <feature>
+                <user-interface>
+                    <web-context-URL>https://xdev.home.www.uprr.com/neq/permanence</web-context-URL>
+                    <context>neq</context>
+                </user-interface>
+            </feature>
+        </exposed-feature-list>
+        <deployment-strategy>ACTIVE_ACTIVE</deployment-strategy>
+    </environment>	 
+    <environment type="TEST">
+        <deployment-target>
+            <cluster>
+                <type>JBOSS_EWS</type>
+                <name>NEQ-A</name>
+            </cluster>
+        </deployment-target>
+        <!-- SAMPLE: ADD any required resources
+        <dependent-resource-list>
+            <resource>
+                <service-consumed>
+                    <XMF-service>
+                        <name>error-code/find-error-code-descriptions/1.0</name>
+                        <consumer-user-id>dneq999</consumer-user-id>
+                   </XMF-service>
+                </service-consumed>
+            </resource>
+        </dependent-resource-list>
+        -->
+        <exposed-feature-list>
+            <feature>
+                <user-interface>
+                    <web-context-URL>https://xtest.home.www.uprr.com/neq/permanence</web-context-URL>
+                    <context>neq</context>
+                </user-interface>
+            </feature>
+        </exposed-feature-list>
+        <deployment-strategy>ACTIVE_ACTIVE</deployment-strategy>
+    </environment>
+    <environment type="PRODUCTION">
+        <deployment-target>
+            <cluster>
+                <type>JBOSS_EWS</type>
+                <name>NEQ-A</name>
+            </cluster>
+        </deployment-target>
+        <!-- SAMPLE: ADD any required resources
+        <dependent-resource-list>
+            <resource>
+                <service-consumed>
+                    <XMF-service>
+                        <name>error-code/find-error-code-descriptions/1.0</name>
+                        <consumer-user-id>dneq999</consumer-user-id>
+                   </XMF-service>
+                </service-consumed>
+            </resource>
+        </dependent-resource-list>
+        -->
+        <exposed-feature-list>
+            <feature>
+                <user-interface>
+                    <web-context-URL>https://home.www.uprr.com/neq/permanence</web-context-URL>
+                    <context>neq</context>
+                </user-interface>
+            </feature>
+        </exposed-feature-list>
+        <!-- SAMPLE: ADD Monitors
+        <monitor-list>
+            <monitor>
+                <name>neq-permanence</name>
+                <type>EMS</type>
+                <id>43701</id>                
+            </monitor>
+        </monitor-list>
+        -->
+        <deployment-strategy>ACTIVE_ACTIVE</deployment-strategy>
+    </environment>
+</deployment-unit>

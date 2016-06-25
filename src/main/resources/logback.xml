@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+   	<contextName>permanence</contextName>
+   	
+   	<appender name="appFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${jbs.logdir}/apps/permanence/permanence-webapp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${jbs.logdir}/apps/permanence/permanence-webapp-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<MaxHistory>7</MaxHistory>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+				<MaxHistory>3</MaxHistory>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%p] [%d{ISO8601}] [%c] [%m]%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="thirdPartyFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${jbs.logdir}/apps/permanence/permanence-other.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${jbs.logdir}/apps/permanence/permanence-other-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<MaxHistory>7</MaxHistory>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+				<MaxHistory>3</MaxHistory>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%p] [%d{ISO8601}] [%c] [%m]%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+  	    <encoder>
+            <pattern>[%p] [%d{ISO8601}] [%c] [%m]%n</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="org.springframework" additivity="false" level="debug">
+        <appender-ref ref="thirdPartyFile"/>
+    </logger>
+
+    <logger name="com.uprr" additivity="false" level="info">
+        <appender-ref ref="appFile"/>
+    </logger>
+    
+    <root level="info">
+        <appender-ref ref="thirdPartyFile"/>
+    </root>
+</configuration>

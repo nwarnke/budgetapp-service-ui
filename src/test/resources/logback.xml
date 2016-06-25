@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+  	    <encoder>
+            <pattern>[%p] [%d{ISO8601}] [%c] [%m]%n</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="org.springframework" additivity="false" level="debug">
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="com.uprr" additivity="false" level="info">
+        <appender-ref ref="console"/>
+    </logger>
+    
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
