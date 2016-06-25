@@ -1,4 +1,4 @@
-package com.trn;
+package com.dao;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 

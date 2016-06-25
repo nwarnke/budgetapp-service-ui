@@ -1,8 +1,8 @@
-package com.trn.config;
+package com.config;
 
 
-import com.trn.IUserDao;
-import com.trn.UserDao;
+import com.dao.IUserDao;
+import com.dao.UserDao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

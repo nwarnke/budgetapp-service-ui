@@ -1,4 +1,4 @@
-package com.trn.config;
+package com.config;
 
 import org.springframework.context.annotation.*;
 

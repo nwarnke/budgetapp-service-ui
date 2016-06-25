@@ -23,7 +23,7 @@
 //import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 //import org.springframework.web.context.WebApplicationContext;
 //
-//import com.trn.config.MainConfig;
+//import com.config.MainConfig;
 //import com.trn.dto.*;
 //import com.trn.service.TrainService;
 //
