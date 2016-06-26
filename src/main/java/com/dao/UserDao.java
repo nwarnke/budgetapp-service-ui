@@ -1,9 +1,13 @@
 package com.dao;
 
+import com.dto.UserDto;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public class UserDao implements IUserDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -13,10 +17,21 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public List<Map<String, Object>> getSomething(){
-        final List<Map<String, Object>> maps = namedParameterJdbcTemplate.getJdbcOperations().queryForList("select name from \"User\" where userid = 12345");
-        return maps;
+    public List<UserDto> getLoginInfo(String name, String password){
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("username", name);
+        mapSqlParameterSource.addValue("password", password);
+        return namedParameterJdbcTemplate.query("select * from \"User\" where name = :username and password = :password", mapSqlParameterSource, rowMapper);
     }
 
+    RowMapper<UserDto> rowMapper = new RowMapper<UserDto>() {
+        @Override
+        public UserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            UserDto userDto = new UserDto();
+            userDto.setName(rs.getString("name"));
+            userDto.setUserid(rs.getString("userid"));
+            return userDto;
+        }
+    };
 
 }

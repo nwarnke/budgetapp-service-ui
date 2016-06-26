@@ -1,9 +1,10 @@
 package com.dao;
 
+import com.dto.UserDto;
+
 import java.util.List;
-import java.util.Map;
 
 public interface IUserDao {
 
-    List<Map<String, Object>> getSomething();
+    List<UserDto> getLoginInfo(String name, String password);
 }
