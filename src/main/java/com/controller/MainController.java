@@ -1,8 +1,6 @@
 package com.controller;
 
 import com.dao.IUserDao;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,9 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.ArrayList;
-
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +27,8 @@ public class MainController {
     @ResponseBody
     public List<Map<String, Object>> getSomething(HttpServletRequest httpRequest,
                                                   HttpServletResponse httpResponse) throws IOException {
-//
+httpResponse.addHeader("Access-Control-Allow-Origin",
+        "https://budget-management-app.herokuapp.com");
         final List<Map<String, Object>> something = userDao.getSomething();
         return something;
     }
