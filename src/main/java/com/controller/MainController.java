@@ -29,8 +29,8 @@ public class MainController {
     public List<UserDto> isAuthUser(HttpServletRequest httpRequest,
                                   HttpServletResponse httpResponse, @RequestParam("username") String username,
                                   @RequestParam("password") String password) throws IOException {
-        httpResponse.addHeader("Access-Control-Allow-Origin",
-                "*");
+        httpResponse.addHeader("Access-Control-Allow-Origin", "*");
+        System.out.println("Hello world");
         return userDao.getLoginInfo(username, password);
     }
 
