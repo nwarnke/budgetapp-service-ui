@@ -3,6 +3,7 @@ package com.controller;
 import com.dao.IUserDao;
 import com.dto.UserDto;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +32,7 @@ public class MainController {
                                   HttpServletResponse httpResponse, @RequestParam("username") String username,
                                   @RequestParam("password") String password) throws IOException {
         httpResponse.addHeader("Access-Control-Allow-Origin", "*");
-
+        System.out.println("Hello world from cole");
         return userDao.getLoginInfo(username, password);
     }
 
