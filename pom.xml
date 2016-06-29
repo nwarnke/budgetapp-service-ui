@@ -288,13 +288,24 @@
 					      </systemProperty>
 					    </systemProperties>
                             <webApp>
-                                <contextPath>/${app-tla}/${proj`ect.artifactId}</contextPath>
+                                <contextPath>/${app-tla}/${project.artifactId}</contextPath>
                                 <overrideDescriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</overrideDescriptor>                                                            
                             </webApp>                          
                             <!-- scanIntervalSeconds>1</scanIntervalSeconds -->
                         </configuration>
                     </plugin>
-
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>2.4</version>
+						<executions>
+							<execution>
+								<id>copy-dependencies</id>
+								<phase>package</phase>
+								<goals><goal>copy-dependencies</goal></goals>
+							</execution>
+						</executions>
+					</plugin>
                 </plugins>
             </build>
         </profile>
@@ -375,6 +386,11 @@
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>1.0.3</version>
+				<configuration>
+					<processTypes>
+						<web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+					</processTypes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -400,6 +416,27 @@
 					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals><goal>copy</goal></goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.eclipse.jetty</groupId>
+									<artifactId>jetty-runner</artifactId>
+									<version>9.3.3.v20150827</version>
+									<destFileName>jetty-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
