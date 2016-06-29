@@ -32,7 +32,7 @@ public class MainController {
                                   HttpServletResponse httpResponse, @RequestParam("username") String username,
                                   @RequestParam("password") String password) throws IOException {
         httpResponse.addHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("Hello world from cole");
+        System.out.println("Hello world from Stephanie");
         return userDao.getLoginInfo(username, password);
     }
 
