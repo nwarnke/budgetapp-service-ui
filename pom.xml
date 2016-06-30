@@ -14,12 +14,11 @@
   		<!--<jboss-dev-url-2>http://vx999a.uprr.com:10001/manager/text</jboss-dev-url-2> &lt;!&ndash; TODO: SET THIS (If required) &ndash;&gt;-->
 		<!-- -X -e clean package cobertura:cobertura tomcat7:redeploy -Pdeploy-local -Pjboss-ews -->
   		<app-tla>bud</app-tla>
-  		<war-file-name>${app-tla}#${project.artifactId}</war-file-name>
 
 		<iu-shared-user-authentication-version>1.1</iu-shared-user-authentication-version>
 		<logout-controller-version>1.0</logout-controller-version>
 
-		<war-file-name>permanence</war-file-name>
+		<war-file-name>budget</war-file-name>
 		<!--<context-path>/reporting</context-path>-->
   		<commons-lang-version>2.1</commons-lang-version>
 		<cglib-version>3.1</cglib-version>
@@ -242,62 +241,47 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-
-		<!-- UPRR Standard Utilities -->
-		<!--<dependency>-->
-			<!--<groupId>com.uprr.ui.shared.components</groupId>-->
-			<!--<artifactId>user-authentication</artifactId>-->
-			<!--<version>${iu-shared-user-authentication-version}</version>-->
-		<!--</dependency>-->
-
-		<!--&lt;!&ndash; NetControl Standard Utilities &ndash;&gt;-->
-		<!--<dependency>-->
-			<!--<groupId>com.uprr.netcontrol.shared.datetime</groupId>-->
-			<!--<artifactId>nc-shared-date-time-core</artifactId>-->
-			<!--<version>${nc-shared-date-time-version}</version>-->
-		<!--</dependency>-->
-		
-		<!-- Application Specific Dependencies Here-->
+		<dependency>
+			<groupId>com.github.jsimone</groupId>
+			<artifactId>webapp-runner</artifactId>
+			<version>8.0.30.2</version>
+		</dependency>
 		
 	</dependencies>
 	
-	<profiles>
-		 <profile>
-            <id>jetty</id>
-            <activation>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
-                        <version>${jetty-plugin-version}</version>
-                        <configuration>
-                        <systemProperties>
-					      <systemProperty>
-  							<name>jbs.logdir</name>
-					        <value>./logs</value>
-					      </systemProperty>
-					      <systemProperty>
-  							<name>jbs.name</name>
-					        <value>localhost</value>
-					      </systemProperty>
-					      <systemProperty>
-					        <name>uprr.implementation.environment</name>
-					        <value>dev</value>
-					      </systemProperty>
-					    </systemProperties>
-                            <webApp>
-                                <contextPath>/${app-tla}/${proj`ect.artifactId}</contextPath>
-                                <overrideDescriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</overrideDescriptor>                                                            
-                            </webApp>                          
-                            <!-- scanIntervalSeconds>1</scanIntervalSeconds -->
-                        </configuration>
-                    </plugin>
+	<!--<profiles>-->
+		 <!--<profile>-->
+            <!--<id>jetty</id>-->
+            <!--<activation>-->
+            <!--</activation>-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.eclipse.jetty</groupId>-->
+                        <!--<artifactId>jetty-maven-plugin</artifactId>-->
+                        <!--<version>${jetty-plugin-version}</version>-->
+                        <!--<configuration>-->
+                        <!--<systemProperties>-->
+					      <!--<systemProperty>-->
+  							<!--<name>jbs.logdir</name>-->
+					        <!--<value>./logs</value>-->
+					      <!--</systemProperty>-->
+					      <!--<systemProperty>-->
+  							<!--<name>jbs.name</name>-->
+					        <!--<value>localhost</value>-->
+					      <!--</systemProperty>-->
+					    <!--</systemProperties>-->
+                            <!--<webApp>-->
+                                <!--<contextPath>/${app-tla}/${project.artifactId}</contextPath>-->
+                                <!--<overrideDescriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</overrideDescriptor>                                                            -->
+                            <!--</webApp>                          -->
+                            <!--&lt;!&ndash; scanIntervalSeconds>1</scanIntervalSeconds &ndash;&gt;-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
 
-                </plugins>
-            </build>
-        </profile>
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
 		<!--<profile> -->
 		  <!--<id>jboss-ews</id>-->
 		  <!--<build>-->
@@ -340,7 +324,7 @@
 		   <!--</plugins>-->
 		 <!--</build>-->
 		<!--</profile>-->
-	</profiles>
+	<!--</profiles>-->
 
 	<build>
 		<defaultGoal>package</defaultGoal>
@@ -375,6 +359,11 @@
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>1.0.3</version>
+				<configuration>
+					<processTypes>
+						<web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+					</processTypes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -400,6 +389,27 @@
 					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals><goal>copy</goal></goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.github.jsimone</groupId>
+									<artifactId>webapp-runner</artifactId>
+									<version>8.0.30.2</version>
+									<destFileName>webapp-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
