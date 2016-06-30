@@ -10,9 +10,8 @@
 	<name>budgetapp</name>
   	
 	<properties>
-  		<!--<jboss-dev-url-1>http://vx9999.uprr.com:10001/manager/text</jboss-dev-url-1> &lt;!&ndash; TODO: SET THIS &ndash;&gt;-->
-  		<!--<jboss-dev-url-2>http://vx999a.uprr.com:10001/manager/text</jboss-dev-url-2> &lt;!&ndash; TODO: SET THIS (If required) &ndash;&gt;-->
-		<!-- -X -e clean package cobertura:cobertura tomcat7:redeploy -Pdeploy-local -Pjboss-ews -->
+
+
   		<app-tla>bud</app-tla>
 
 		<iu-shared-user-authentication-version>1.1</iu-shared-user-authentication-version>
@@ -241,11 +240,7 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.jsimone</groupId>
-			<artifactId>webapp-runner</artifactId>
-			<version>8.0.30.2</version>
-		</dependency>
+
 		
 	</dependencies>
 	

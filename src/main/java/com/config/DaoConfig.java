@@ -22,5 +22,4 @@ public class DaoConfig {
         return new UserDao(namedParameterJdbcTemplate);
     }
 
-
 }
