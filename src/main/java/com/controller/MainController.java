@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping("/main")
 public class MainController {
 
     private IUserDao userDao;
@@ -26,7 +27,7 @@ public class MainController {
         this.userDao = userDao;
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public boolean isAuthUser(HttpServletRequest httpServletRequest,
                               HttpServletResponse httpServletResponse, @RequestParam("username") String username,
@@ -42,7 +43,7 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "userinfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
     public UserDto getUserInfo(HttpServletRequest httpServletRequest){
         UserDto userDto = new UserDto();

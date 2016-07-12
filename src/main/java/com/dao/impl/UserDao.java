@@ -1,5 +1,6 @@
-package com.dao;
+package com.dao.impl;
 
+import com.dao.IUserDao;
 import com.dto.UserDto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
