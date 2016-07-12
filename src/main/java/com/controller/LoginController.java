@@ -2,8 +2,6 @@ package com.controller;
 
 import com.dao.IUserDao;
 import com.dto.UserDto;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +16,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/main")
-public class MainController {
+public class LoginController {
 
     private IUserDao userDao;
 
     @Inject
-    public MainController(IUserDao userDao) {
+    public LoginController(IUserDao userDao) {
         this.userDao = userDao;
     }
 

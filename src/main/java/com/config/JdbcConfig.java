@@ -22,7 +22,9 @@ public class JdbcConfig {
     DriverManagerDataSource dataSource() throws SQLException {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-
+        driverManagerDataSource.setUrl("jdbc:postgresql://ec2-184-73-202-229.compute-1.amazonaws.com:5432/d7ocia487h1sg5?sslmode=require");
+        driverManagerDataSource.setUsername("jvoqrxltmntqtg");
+        driverManagerDataSource.setPassword("fA4Moae5d8OXbgm2aYWevuj91z");
         return driverManagerDataSource;
     }
 

@@ -1,20 +1,21 @@
 package com.controller;
 
-import com.dao.IUserDao;
+import com.dao.IAccountDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.inject.Inject;
 
 @Controller
-@RequestMapping("account")
+@RequestMapping("/account")
 public class AccountController {
 
-    private IUserDao userDao;
+
+    private IAccountDao accountDao;
 
     @Inject
-    public AccountController(IUserDao userDao) {
-        this.userDao = userDao;
+    public AccountController(IAccountDao accountDao) {
+        this.accountDao = accountDao;
     }
 
 }

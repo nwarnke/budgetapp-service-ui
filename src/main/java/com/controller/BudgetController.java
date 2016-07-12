@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.dao.IUserDao;
+import com.dao.IBudgetDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,11 +10,11 @@ import javax.inject.Inject;
 @RequestMapping("/budget")
 public class BudgetController {
 
-    private IUserDao userDao;
+    private IBudgetDao budgetDao;
 
     @Inject
-    public BudgetController(IUserDao userDao) {
-        this.userDao = userDao;
+    public BudgetController(IBudgetDao budgetDao) {
+        this.budgetDao = budgetDao;
     }
 
 

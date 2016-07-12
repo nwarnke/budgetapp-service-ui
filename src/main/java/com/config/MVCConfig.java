@@ -2,7 +2,7 @@ package com.config;
 
 import com.controller.AccountController;
 import com.controller.BudgetController;
-import com.controller.MainController;
+import com.controller.LoginController;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
-@ComponentScan(basePackageClasses = {MainController.class, AccountController.class, BudgetController.class})
+@ComponentScan(basePackageClasses = {LoginController.class, AccountController.class, BudgetController.class})
 @Import({JdbcConfig.class, DaoConfig.class, I18NConfig.class})
 @Configuration
 public class MVCConfig extends WebMvcConfigurationSupport 
