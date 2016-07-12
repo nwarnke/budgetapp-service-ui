@@ -21,15 +21,15 @@ public class UserDao implements IUserDao {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("username", name);
         mapSqlParameterSource.addValue("password", password);
-        return namedParameterJdbcTemplate.query("select * from \"User\" where name = :username and password = :password", mapSqlParameterSource, rowMapper);
+        return namedParameterJdbcTemplate.query("select * from \"user\" where user_name = :username and user_password = :password", mapSqlParameterSource, rowMapper);
     }
 
     RowMapper<UserDto> rowMapper = new RowMapper<UserDto>() {
         @Override
         public UserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
             UserDto userDto = new UserDto();
-            userDto.setName(rs.getString("name"));
-            userDto.setUserid(rs.getString("userid"));
+            userDto.setName(rs.getString("user_name"));
+            userDto.setUserid(rs.getString("user_id"));
             return userDto;
         }
     };

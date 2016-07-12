@@ -28,12 +28,27 @@ public class MainController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public List<UserDto> isAuthUser(HttpServletRequest httpRequest,
-                                  HttpServletResponse httpResponse, @RequestParam("username") String username,
-                                  @RequestParam("password") String password) throws IOException {
-        httpResponse.addHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("Hello world from Stephanie 2");
-        return userDao.getLoginInfo(username, password);
+    public boolean isAuthUser(HttpServletRequest httpServletRequest,
+                              HttpServletResponse httpServletResponse, @RequestParam("username") String username,
+                              @RequestParam("password") String password) throws IOException {
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        final List<UserDto> loginInfo = userDao.getLoginInfo(username, password);
+        if(loginInfo.size() == 1){
+            httpServletRequest.getSession().setAttribute("userid", loginInfo.get(0).getUserid());
+            httpServletRequest.getSession().setAttribute("username", loginInfo.get(0).getName());
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @RequestMapping(value = "userinfo", method = RequestMethod.GET)
+    @ResponseBody
+    public UserDto getUserInfo(HttpServletRequest httpServletRequest){
+        UserDto userDto = new UserDto();
+        userDto.setUserid(httpServletRequest.getSession().getAttribute("userid").toString());
+        userDto.setName(httpServletRequest.getSession().getAttribute("username").toString());
+        return userDto;
     }
 
 }
