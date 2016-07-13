@@ -1,15 +1,13 @@
 package com.dao.impl;
 
-import com.dao.IBudgetDao;
+
+import com.dao.ISubcategoryDao;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-public class BudgetDao implements IBudgetDao {
+public class SubcategoryDao implements ISubcategoryDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public BudgetDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public SubcategoryDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
-
-
-
 }
