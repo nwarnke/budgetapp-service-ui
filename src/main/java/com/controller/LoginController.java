@@ -3,19 +3,16 @@ package com.controller;
 import com.dao.IUserDao;
 import com.dto.UserDto;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/main")
+@CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com"})
+@RequestMapping("/login")
 public class LoginController {
 
     private IUserDao userDao;
@@ -25,12 +22,11 @@ public class LoginController {
         this.userDao = userDao;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     @ResponseBody
-    public boolean isAuthUser(HttpServletRequest httpServletRequest,
-                              HttpServletResponse httpServletResponse, @RequestParam("username") String username,
+    public boolean isAuthUser(HttpServletRequest httpServletRequest, @RequestParam("username") String username,
                               @RequestParam("password") String password) throws IOException {
-        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
         final List<UserDto> loginInfo = userDao.getLoginInfo(username, password);
         if(loginInfo.size() == 1){
             httpServletRequest.getSession().setAttribute("userid", loginInfo.get(0).getUserid());
