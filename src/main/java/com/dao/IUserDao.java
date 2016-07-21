@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IUserDao {
 
-    List<UserDto> getLoginInfo(String name, String password);
+    List<UserDto> getUserPassword(String name);
 }

@@ -18,19 +18,25 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public List<UserDto> getLoginInfo(String name, String password){
+    public List<UserDto> getUserPassword(String username){
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("username", name);
-        mapSqlParameterSource.addValue("password", password);
-        return namedParameterJdbcTemplate.query("select * from \"user\" where user_name = :username and user_password = :password", mapSqlParameterSource, rowMapper);
+        mapSqlParameterSource.addValue("username", username);
+        return namedParameterJdbcTemplate.query("select * from app_user where user_id in (select DISTINCT user_id from app_user where user_name = :username)", mapSqlParameterSource, rowMapper);
     }
 
     RowMapper<UserDto> rowMapper = new RowMapper<UserDto>() {
         @Override
         public UserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
             UserDto userDto = new UserDto();
-            userDto.setName(rs.getString("user_name"));
-            userDto.setUserid(rs.getString("user_id"));
+            userDto.setUserName(rs.getString("user_name"));
+            if(rs.getString("first_name") != null) {
+                userDto.setFirstName(rs.getString("first_name"));
+            }
+            if(rs.getString("last_name") != null) {
+                userDto.setLastName(rs.getString("last_name"));
+            }
+            userDto.setUserId(rs.getString("user_id"));
+            userDto.setPassword(rs.getString("user_password"));
             return userDto;
         }
     };

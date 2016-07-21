@@ -27,14 +27,18 @@ public class LoginController extends HttpServlet {
     @ResponseBody
     public boolean isAuthUser(HttpServletRequest httpServletRequest, @RequestParam("username") String username,
                               @RequestParam("password") String password) throws IOException {
-        final List<UserDto> loginInfo = userDao.getLoginInfo(username, password);
-        if(loginInfo.size() == 1){
-            httpServletRequest.getSession().setAttribute("userid", loginInfo.get(0).getUserid());
-            httpServletRequest.getSession().setAttribute("username", loginInfo.get(0).getName());
-            httpServletRequest.getSession().setAttribute("isAuthenticated", true);
-            return true;
+        final List<UserDto> userDto = userDao.getUserPassword(username);
+        if(userDto.size() == 1){
+            if(userDto.get(0).getPassword().equals(password)){
+                httpServletRequest.getSession().setAttribute("authenticated", true);
+                httpServletRequest.getSession().setAttribute("userInfo", userDto.get(0));
+                return true;
+            }else{
+                httpServletRequest.getSession().setAttribute("authenticated", false);
+                return false;
+            }
         }else{
-            httpServletRequest.getSession().setAttribute("isAuthenticated", false);
+            httpServletRequest.getSession().setAttribute("authenticated", false);
             return false;
         }
     }

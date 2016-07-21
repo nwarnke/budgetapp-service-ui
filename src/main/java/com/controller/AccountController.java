@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com"})
@@ -27,10 +26,7 @@ public class AccountController {
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
     public UserDto getUserInfo(HttpServletRequest httpServletRequest){
-        UserDto userDto = new UserDto();
-        userDto.setUserid(httpServletRequest.getSession().getAttribute("userid").toString());
-        userDto.setName(httpServletRequest.getSession().getAttribute("username").toString());
-        return userDto;
+        return (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
     }
 
 }
