@@ -13,9 +13,12 @@ import javax.inject.Inject;
 @Configuration
 public class DaoConfig {
 
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @Inject
-    @Qualifier("jdbcFactory")
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    public DaoConfig(@Qualifier("jdbcFactory") NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Bean
     IUserDao userDao(){
