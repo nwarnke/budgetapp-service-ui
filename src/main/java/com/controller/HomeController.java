@@ -35,8 +35,6 @@ public class HomeController {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
     final UserDto userInfo = (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
-//    final List<Budget> budgets = budgetDao.getBudgets(userInfo.getUserId());
-    final List<Budget> budgets = budgetDao.getBudgets(userInfo.getUserId());
     return new ResponseEntity<>(budgetDao.getBudgets(userInfo.getUserId()), HttpStatus.OK);
   }
 
