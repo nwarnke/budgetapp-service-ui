@@ -4,6 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Service {
     public static Boolean isAuthenticatedUser(HttpServletRequest httpServletRequest){
-        return (Boolean) httpServletRequest.getSession().getAttribute("authenticated");
+        if(httpServletRequest.getSession().getAttribute("authenticated") != null) {
+            return (Boolean) httpServletRequest.getSession().getAttribute("authenticated");
+        }else{
+            return false;
+        }
     }
 }

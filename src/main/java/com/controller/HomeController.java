@@ -32,7 +32,7 @@ public class HomeController {
   @ResponseBody
   public ResponseEntity<List<Budget>> getBudgets(HttpServletRequest httpServletRequest){
     if(!Service.isAuthenticatedUser(httpServletRequest)){
-      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     final UserDto userInfo = (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
     return new ResponseEntity<>(budgetDao.getBudgets(userInfo.getUserId()), HttpStatus.OK);
