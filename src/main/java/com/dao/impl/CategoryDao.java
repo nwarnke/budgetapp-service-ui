@@ -21,7 +21,7 @@ public class CategoryDao implements ICategoryDao {
     public List<Category> findCategoriesForUser(String userId){
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("userid", userId);
-        return namedParameterJdbcTemplate.query("SELECT distinct category_name from budget b INNER JOIN statement s on b.budget_id = s.budget_id INNER JOIN category c on s.statement_id = c.statement_id where b.user_id = \":userid\"", mapSqlParameterSource, rowMapper);
+        return namedParameterJdbcTemplate.query("SELECT b.budget_id, statement_start_date from budget b INNER JOIN statement s on b.budget_id = s.budget_id INNER JOIN category c on s.statement_id = c.statement_id where b.user_id = :userid", mapSqlParameterSource, rowMapper);
     }
 
     private RowMapper<Category> rowMapper = new RowMapper<Category>() {

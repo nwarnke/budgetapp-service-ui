@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.dao.IAccountDao;
 import com.dto.UserDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,13 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com"})
 @RequestMapping("/account")
 public class AccountController {
-
-    private IAccountDao accountDao;
-
-    @Inject
-    public AccountController(IAccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody

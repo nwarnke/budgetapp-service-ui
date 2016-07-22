@@ -1,8 +1,14 @@
 package com.config;
 
 
-import com.dao.*;
-import com.dao.impl.*;
+import com.dao.IBudgetDao;
+import com.dao.ICategoryDao;
+import com.dao.ISubcategoryDao;
+import com.dao.IUserDao;
+import com.dao.impl.BudgetDao;
+import com.dao.impl.CategoryDao;
+import com.dao.impl.SubcategoryDao;
+import com.dao.impl.UserDao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +34,6 @@ public class DaoConfig {
     @Bean
     IBudgetDao budgetDao(){
         return new BudgetDao(namedParameterJdbcTemplate);
-    }
-
-    @Bean
-    IAccountDao accountDao(){
-        return new AccountDao(namedParameterJdbcTemplate);
     }
 
     @Bean

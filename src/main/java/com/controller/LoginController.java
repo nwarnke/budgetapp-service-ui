@@ -41,6 +41,7 @@ public class LoginController extends HttpServlet {
             httpServletRequest.getSession().setAttribute("authenticated", false);
             return false;
         }
+
     }
 
 
