@@ -5,11 +5,20 @@ import java.util.List;
 
 public class Budget {
     private Integer budgetId;
-    private String budgetName;
+    private String name;
     private List<Category> categories;
-    private Integer budgetLimit;
+    private Integer limit;
     private Integer currentAmount;
-    private Date creationDate;
+    private Date startDate;
+    private Date endDate;
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     public Integer getCurrentAmount() {
         return currentAmount;
@@ -19,12 +28,12 @@ public class Budget {
         this.currentAmount = currentAmount;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Integer getBudgetId() {
@@ -35,12 +44,12 @@ public class Budget {
         this.budgetId = budgetId;
     }
 
-    public Integer getBudgetLimit() {
-        return budgetLimit;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setBudgetLimit(Integer budgetLimit) {
-        this.budgetLimit = budgetLimit;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public List<Category> getCategories() {
@@ -51,11 +60,11 @@ public class Budget {
         this.categories = categories;
     }
 
-    public String getBudgetName() {
-        return budgetName;
+    public String getName() {
+        return name;
     }
 
-    public void setBudgetName(String budgetName) {
-        this.budgetName = budgetName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

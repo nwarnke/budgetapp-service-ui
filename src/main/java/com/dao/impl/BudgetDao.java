@@ -30,10 +30,11 @@ public class BudgetDao implements IBudgetDao {
         public Budget mapRow(ResultSet rs, int rowNum) throws SQLException {
             Budget budget = new Budget();
             budget.setBudgetId(rs.getInt("budget_id"));
-            budget.setBudgetLimit(rs.getInt("budget_limit"));
-            budget.setBudgetName(rs.getString("budget_name"));
-            budget.setCreationDate(rs.getDate("creation_date"));
+            budget.setLimit(rs.getInt("budget_limit"));
             budget.setCurrentAmount(rs.getInt("current_amount"));
+            budget.setName(rs.getString("budget_name"));
+            budget.setStartDate(rs.getDate("budget_start_date"));
+            budget.setEndDate(rs.getDate("budget_end_date"));
             return budget;
         }
     };

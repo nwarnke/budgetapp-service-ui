@@ -30,7 +30,7 @@ public class BudgetController {
         Budget budget = new Budget();
         final String userid = (String) httpServletRequest.getSession().getAttribute("userid");
         final List<Category> categoriesForUser = categoryDao.findCategoriesForUser(userid);
-        budget.setBudgetName("Test budget");
+        budget.setName("Test budget");
         budget.setCategories(categoriesForUser);
         return budget;
     }
