@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
-@CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com"})
+@CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com", "http://budget-management-app.herokuapp.com"})
 public class LogoutController extends HttpServlet {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)

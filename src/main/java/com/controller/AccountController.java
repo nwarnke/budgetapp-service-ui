@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com"})
+@CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com", "http://budget-management-app.herokuapp.com"})
 @RequestMapping("/account")
 public class AccountController {
 
