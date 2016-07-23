@@ -10,4 +10,6 @@ public interface IBudgetDao {
     List<Budget> getBudgets(String userId);
 
     int addBudget(String budgetName, String amount, Date startDate, Date endDate, String userId);
+
+    Budget lookupBudget(String userId, String budgetId);
 }

@@ -18,7 +18,8 @@ public class AccountController {
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
     public UserDto getUserInfo(HttpServletRequest httpServletRequest){
-        return (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
+//        return (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
+        return null; //TODO finish method
     }
 
 }

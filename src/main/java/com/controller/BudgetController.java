@@ -33,14 +33,14 @@ public class BudgetController {
         this.categoryDao = categoryDao;
     }
 
-    @RequestMapping(value = "/getbudget", method = RequestMethod.GET)     //TODO incomplete method
-    public Budget getBudget(HttpServletRequest httpServletRequest) {
-        Budget budget = new Budget();
+    @RequestMapping(value = "/getbudget", method = RequestMethod.GET)
+    public ResponseEntity<Budget> getBudget(HttpServletRequest httpServletRequest, @RequestParam("budgetId") String budgetId) {
+        if(!Service.isAuthenticatedUser(httpServletRequest)){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         final String userid = (String) httpServletRequest.getSession().getAttribute("userid");
-        final List<Category> categoriesForUser = categoryDao.findCategoriesForUser(userid);
-        budget.setName("Test budget");
-        budget.setCategories(categoriesForUser);
-        return budget;
+        final Budget budget = budgetDao.lookupBudget(budgetId, userid);
+        return new ResponseEntity<>(budget, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/newbudget", method = RequestMethod.POST)
@@ -54,9 +54,6 @@ public class BudgetController {
         }
         Date startDateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
         Date endDateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-
-        String parsedStartDate = new SimpleDateFormat("yyyy-MM-dd").format(startDateUtil);
-        String parsedEndDate = new SimpleDateFormat("yyyy-MM-dd").format(endDateUtil);
 
         final int updated = budgetDao.addBudget(budgetName, amount, startDateUtil, endDateUtil, ((UserDto) httpServletRequest.getSession().getAttribute("userInfo")).getUserId());
 
