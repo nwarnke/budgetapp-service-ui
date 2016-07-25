@@ -38,7 +38,8 @@ public class BudgetController {
         if(!Service.isAuthenticatedUser(httpServletRequest)){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        final String userid = (String) httpServletRequest.getSession().getAttribute("userid");
+        final UserDto userInfo = (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
+        final String userid = (String) httpServletRequest.getSession().getAttribute(userInfo.getUserId());
         final Budget budget = budgetDao.lookupBudget(budgetId, userid);
         return new ResponseEntity<>(budget, HttpStatus.OK);
     }
