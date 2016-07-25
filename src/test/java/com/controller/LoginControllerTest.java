@@ -45,6 +45,7 @@ public class LoginControllerTest {
     });
 
     loginController.isAuthUser(mockHttpServletRequest,username, password);
+    context.assertIsSatisfied();
   }
 
   private UserDto createUserDto() {

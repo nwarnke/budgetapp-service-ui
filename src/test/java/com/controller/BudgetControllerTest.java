@@ -48,6 +48,7 @@ public class BudgetControllerTest {
     });
 
     budgetController.getBudget(mockHttpServletRequest, budgetId);
+    context.assertIsSatisfied();
   }
 
   private UserDto createUserDto() {
