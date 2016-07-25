@@ -2,13 +2,19 @@ package com.controller;
 
 import com.dao.IBudgetDao;
 import com.dao.impl.BudgetDao;
+import com.dto.Budget;
 import com.dto.UserDto;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class HomeControllerTest {
 
@@ -37,7 +43,8 @@ public class HomeControllerTest {
       }
     });
 
-    homeController.getBudgets(mockHttpServletRequest);
+    final ResponseEntity<List<Budget>> responseEntity = homeController.getBudgets(mockHttpServletRequest);
+    assertEquals(200, responseEntity.getStatusCodeValue());
     context.assertIsSatisfied();
   }
 

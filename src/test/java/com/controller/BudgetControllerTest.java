@@ -11,9 +11,12 @@ import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
 
 public class BudgetControllerTest {
 
@@ -47,9 +50,36 @@ public class BudgetControllerTest {
       }
     });
 
-    budgetController.getBudget(mockHttpServletRequest, budgetId);
+    final ResponseEntity<Budget> responseEntity = budgetController.getBudget(mockHttpServletRequest, budgetId);
+    assertEquals(200, responseEntity.getStatusCodeValue());
     context.assertIsSatisfied();
   }
+
+  @Test
+  public void testNewBudget() throws Exception {
+    MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+    mockHttpServletRequest.getSession().setAttribute("authenticated", true);
+    final UserDto userDto = createUserDto();
+    mockHttpServletRequest.getSession().setAttribute("userInfo", userDto);
+
+    final String budgetName = "Test budget";
+    final String amount = "1600";
+    final String startDate = "2016-07-06T05:00:00.000Z";
+    final String endDate = "2016-07-27T05:00:00.000Z";
+
+    context.checking(new Expectations(){
+      {
+        oneOf(budgetDao).addBudget(with(any(String.class)), with(any(String.class)), with(any(Date.class)), with(any(Date.class)), with(any(String.class)));
+        will(returnValue(1));
+      }
+    });
+
+
+    final ResponseEntity responseEntity = budgetController.newBudget(mockHttpServletRequest, budgetName, amount, startDate, endDate);
+    assertEquals(202, responseEntity.getStatusCodeValue());
+    context.assertIsSatisfied();
+  }
+
 
   private UserDto createUserDto() {
     final UserDto userDto = new UserDto();
@@ -70,29 +100,4 @@ public class BudgetControllerTest {
     budget.setLimit(2000);
     return budget;
   }
-
-  @Test
-  public void testNewBudget() throws Exception {
-    MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
-    mockHttpServletRequest.getSession().setAttribute("authenticated", true);
-    final UserDto userDto = createUserDto();
-    mockHttpServletRequest.getSession().setAttribute("userInfo", userDto);
-
-    final String budgetName = "Test budget";
-    final String amount = "1600";
-    final String startDate = "2016-07-06T05:00:00.000Z";
-    final String endDate = "2016-07-27T05:00:00.000Z";
-    final String userId = "test";
-
-    context.checking(new Expectations(){
-      {
-        oneOf(budgetDao).addBudget(with(any(String.class)), with(any(String.class)), with(any(Date.class)), with(any(Date.class)), with(any(String.class)));
-      }
-    });
-
-
-
-    budgetController.newBudget(mockHttpServletRequest, budgetName, amount, startDate, endDate);
-  }
-
 }

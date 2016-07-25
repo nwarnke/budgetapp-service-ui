@@ -13,6 +13,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 public class LoginControllerTest {
 
   private Mockery context;
@@ -44,7 +46,8 @@ public class LoginControllerTest {
       }
     });
 
-    loginController.isAuthUser(mockHttpServletRequest,username, password);
+    final boolean authUser = loginController.isAuthUser(mockHttpServletRequest, username, password);
+    assertTrue(authUser);
     context.assertIsSatisfied();
   }
 
