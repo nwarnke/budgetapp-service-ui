@@ -3,7 +3,7 @@ package com.controller;
 import com.dao.IBudgetDao;
 import com.dao.impl.BudgetDao;
 import com.dto.Budget;
-import com.dto.UserDto;
+import com.dto.User;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -34,12 +34,12 @@ public class HomeControllerTest {
   public void getBudgets() throws Exception {
     MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
     mockHttpServletRequest.getSession().setAttribute("authenticated", true);
-    final UserDto userDto = createUserDto();
-    mockHttpServletRequest.getSession().setAttribute("userInfo", userDto);
+    final User user = createUser();
+    mockHttpServletRequest.getSession().setAttribute("userInfo", user);
 
     context.checking(new Expectations(){
       {
-        oneOf(budgetDao).getBudgets(with(userDto.getUserId()));
+        oneOf(budgetDao).getBudgets(with(user.getUserId()));
       }
     });
 
@@ -48,14 +48,14 @@ public class HomeControllerTest {
     context.assertIsSatisfied();
   }
 
-  private UserDto createUserDto() {
-    final UserDto userDto = new UserDto();
-    userDto.setPassword("password");
-    userDto.setUserId("test");
-    userDto.setFirstName("john");
-    userDto.setLastName("smith");
-    userDto.setUserName("testing");
-    return userDto;
+  private User createUser() {
+    final User user = new User();
+    user.setPassword("password");
+    user.setUserId("test");
+    user.setFirstName("john");
+    user.setLastName("smith");
+    user.setUserName("testing");
+    return user;
   }
 
 

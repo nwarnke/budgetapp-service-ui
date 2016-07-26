@@ -2,7 +2,7 @@ package com.controller;
 
 import com.dao.IUserDao;
 import com.dao.impl.UserDao;
-import com.dto.UserDto;
+import com.dto.User;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -36,13 +36,13 @@ public class LoginControllerTest {
     final String username = "test";
     String password = "password";
 
-    final List<UserDto> userDtos = new ArrayList<>();
-    userDtos.add(createUserDto());
+    final List<User> users = new ArrayList<>();
+    users.add(createUser());
 
     context.checking(new Expectations(){
       {
         oneOf(userDao).getUserPassword(with(username));
-        will(returnValue(userDtos));
+        will(returnValue(users));
       }
     });
 
@@ -51,14 +51,14 @@ public class LoginControllerTest {
     context.assertIsSatisfied();
   }
 
-  private UserDto createUserDto() {
-    UserDto userDto = new UserDto();
-    userDto.setFirstName("john");
-    userDto.setLastName("doe");
-    userDto.setPassword("password");
-    userDto.setUserId("test");
-    userDto.setUserName("testing");
-    return userDto;
+  private User createUser() {
+    User user = new User();
+    user.setFirstName("john");
+    user.setLastName("doe");
+    user.setPassword("password");
+    user.setUserId("test");
+    user.setUserName("testing");
+    return user;
   }
 
 

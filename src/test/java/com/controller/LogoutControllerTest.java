@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.dto.UserDto;
+import com.dto.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class LogoutControllerTest {
   public void logout() throws Exception {
     MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
     mockHttpServletRequest.getSession().setAttribute("authenticated", true);
-    mockHttpServletRequest.getSession().setAttribute("userInfo", new UserDto());
+    mockHttpServletRequest.getSession().setAttribute("userInfo", new User());
     final ResponseEntity logout = logoutController.logout(mockHttpServletRequest);
     assertEquals(logout.getStatusCode().value(), 202);
   }
