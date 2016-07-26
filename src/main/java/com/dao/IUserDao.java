@@ -1,10 +1,10 @@
 package com.dao;
 
-import com.dto.UserDto;
+import com.dto.User;
 
 import java.util.List;
 
 public interface IUserDao {
 
-    List<UserDto> getUserPassword(String name);
+    List<User> getUserPassword(String name);
 }

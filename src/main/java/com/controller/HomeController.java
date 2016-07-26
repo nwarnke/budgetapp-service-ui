@@ -2,7 +2,7 @@ package com.controller;
 
 import com.dao.IBudgetDao;
 import com.dto.Budget;
-import com.dto.UserDto;
+import com.dto.User;
 import com.service.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,7 +34,7 @@ public class HomeController {
     if(!Service.isAuthenticatedUser(httpServletRequest)){
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
-    final UserDto userInfo = (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
+    final User userInfo = (User) httpServletRequest.getSession().getAttribute("userInfo");
     return new ResponseEntity<>(budgetDao.getBudgets(userInfo.getUserId()), HttpStatus.OK);
   }
 

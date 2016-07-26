@@ -3,7 +3,7 @@ package com.controller;
 import com.dao.IBudgetDao;
 import com.dao.ICategoryDao;
 import com.dto.Budget;
-import com.dto.UserDto;
+import com.dto.User;
 import com.service.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class BudgetController {
         if(!Service.isAuthenticatedUser(httpServletRequest)){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        final UserDto userInfo = (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
+        final User userInfo = (User) httpServletRequest.getSession().getAttribute("userInfo");
         final Budget budget = budgetDao.lookupBudget(budgetId, userInfo.getUserId());
         return new ResponseEntity<>(budget, HttpStatus.OK);
     }
@@ -52,7 +52,7 @@ public class BudgetController {
         Date startDateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
         Date endDateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 
-        final int updated = budgetDao.addBudget(budgetName, amount, startDateUtil, endDateUtil, ((UserDto) httpServletRequest.getSession().getAttribute("userInfo")).getUserId());
+        final int updated = budgetDao.addBudget(budgetName, amount, startDateUtil, endDateUtil, ((User) httpServletRequest.getSession().getAttribute("userInfo")).getUserId());
 
         if(updated == 1) {
             return new ResponseEntity(HttpStatus.ACCEPTED);

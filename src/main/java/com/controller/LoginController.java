@@ -1,7 +1,7 @@
 package com.controller;
 
 import com.dao.IUserDao;
-import com.dto.UserDto;
+import com.dto.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +27,11 @@ public class LoginController extends HttpServlet {
     @ResponseBody
     public boolean isAuthUser(HttpServletRequest httpServletRequest, @RequestParam("username") String username,
                               @RequestParam("password") String password) throws IOException {
-        final List<UserDto> userDto = userDao.getUserPassword(username);
-        if(userDto.size() == 1){
-            if(userDto.get(0).getPassword().equals(password)){
+        final List<User> user = userDao.getUserPassword(username);
+        if(user.size() == 1){
+            if(user.get(0).getPassword().equals(password)){
                 httpServletRequest.getSession().setAttribute("authenticated", true);
-                httpServletRequest.getSession().setAttribute("userInfo", userDto.get(0));
+                httpServletRequest.getSession().setAttribute("userInfo", user.get(0));
                 return true;
             }else{
                 httpServletRequest.getSession().setAttribute("authenticated", false);

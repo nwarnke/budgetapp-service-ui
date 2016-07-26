@@ -1,13 +1,12 @@
 package com.controller;
 
-import com.dto.UserDto;
+import com.dto.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -17,8 +16,8 @@ public class AccountController {
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
-    public UserDto getUserInfo(HttpServletRequest httpServletRequest){
-//        return (UserDto) httpServletRequest.getSession().getAttribute("userInfo");
+    public User getUserInfo(HttpServletRequest httpServletRequest){
+//        return (User) httpServletRequest.getSession().getAttribute("userInfo");
         return null; //TODO finish method
     }
 
