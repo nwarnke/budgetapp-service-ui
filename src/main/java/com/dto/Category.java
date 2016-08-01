@@ -3,10 +3,19 @@ package com.dto;
 import java.util.List;
 
 public class Category {
+    private Integer categoryId;
     private String categoryName;
-    private String expenses;
-    private String allowance;
+    private Integer categoryExpenses;
+    private Integer categoryLimit;
     private List<Subcategory> subcategories;
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getCategoryName() {
         return categoryName;
@@ -16,20 +25,20 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public String getExpenses() {
-        return expenses;
+    public Integer getCategoryExpenses() {
+        return categoryExpenses;
     }
 
-    public void setExpenses(String expenses) {
-        this.expenses = expenses;
+    public void setCategoryExpenses(Integer categoryExpenses) {
+        this.categoryExpenses = categoryExpenses;
     }
 
-    public String getAllowance() {
-        return allowance;
+    public Integer getCategoryLimit() {
+        return categoryLimit;
     }
 
-    public void setAllowance(String allowance) {
-        this.allowance = allowance;
+    public void setCategoryLimit(Integer categoryLimit) {
+        this.categoryLimit = categoryLimit;
     }
 
     public List<Subcategory> getSubcategories() {

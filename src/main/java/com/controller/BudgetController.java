@@ -2,7 +2,10 @@ package com.controller;
 
 import com.dao.IBudgetDao;
 import com.dao.ICategoryDao;
+import com.dao.ISubcategoryDao;
 import com.dto.Budget;
+import com.dto.Category;
+import com.dto.Subcategory;
 import com.dto.User;
 import com.service.Service;
 import org.springframework.http.HttpStatus;
@@ -14,7 +17,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @CrossOrigin(origins = {"http://localhost:9000", "https://budget-management-app.herokuapp.com", "http://budget-management-app.herokuapp.com"})
@@ -23,20 +28,35 @@ public class BudgetController {
 
     private IBudgetDao budgetDao;
     private ICategoryDao categoryDao;
+    private ISubcategoryDao subcategoryDao;
 
     @Inject
-    public BudgetController(IBudgetDao budgetDao, ICategoryDao categoryDao) {
+    public BudgetController(IBudgetDao budgetDao, ICategoryDao categoryDao, ISubcategoryDao subcategoryDao) {
         this.budgetDao = budgetDao;
         this.categoryDao = categoryDao;
+        this.subcategoryDao = subcategoryDao;
     }
 
     @RequestMapping(value = "/getbudget", method = RequestMethod.GET)
-    public ResponseEntity<Budget> getBudget(HttpServletRequest httpServletRequest, @RequestParam("budgetId") String budgetId) {     //TODO complete method. Needs database query for categories/subcategories
+    public ResponseEntity<Budget> getBudget(HttpServletRequest httpServletRequest,
+                                            @RequestParam("budgetId") String budgetId) {
         if(!Service.isAuthenticatedUser(httpServletRequest)){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        final User userInfo = (User) httpServletRequest.getSession().getAttribute("userInfo");
-        final Budget budget = budgetDao.lookupBudget(budgetId, userInfo.getUserId());
+        final Budget budget = budgetDao.lookupBudget(budgetId);
+        List<Category> categories = categoryDao.findCategoriesForBudgetId(budgetId);
+        if(categories == null) {
+            categories = new ArrayList<>();
+        }
+        budget.setCategories(categories);
+        for(Category category: budget.getCategories()){
+            String categoryId = String.valueOf(category.getCategoryId());
+            List<Subcategory> subcategories = subcategoryDao.findSubCategoriesForCategoryId(categoryId);
+            if(subcategories == null) {
+                subcategories = new ArrayList<>();
+            }
+            category.setSubcategories(subcategories);
+        }
         return new ResponseEntity<>(budget, HttpStatus.OK);
     }
 
@@ -60,5 +80,4 @@ public class BudgetController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

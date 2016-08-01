@@ -1,9 +1,18 @@
 package com.dto;
 
 public class Subcategory {
+    private Integer subcategoryId;
     private String subcategoryName;
-    private String expenses;
-    private String allowance;
+    private Integer subcategoryExpenses;
+    private Integer subcategoryLimit;
+
+    public Integer getSubcategoryId() {
+        return subcategoryId;
+    }
+
+    public void setSubcategoryId(Integer subcategoryId) {
+        this.subcategoryId = subcategoryId;
+    }
 
     public String getSubcategoryName() {
         return subcategoryName;
@@ -13,19 +22,19 @@ public class Subcategory {
         this.subcategoryName = subcategoryName;
     }
 
-    public String getExpenses() {
-        return expenses;
+    public Integer getSubcategoryExpenses() {
+        return subcategoryExpenses;
     }
 
-    public void setExpenses(String expenses) {
-        this.expenses = expenses;
+    public void setSubcategoryExpenses(Integer subcategoryExpenses) {
+        this.subcategoryExpenses = subcategoryExpenses;
     }
 
-    public String getAllowance() {
-        return allowance;
+    public Integer getSubcategoryLimit() {
+        return subcategoryLimit;
     }
 
-    public void setAllowance(String allowance) {
-        this.allowance = allowance;
+    public void setSubcategoryLimit(Integer subcategoryLimit) {
+        this.subcategoryLimit = subcategoryLimit;
     }
 }

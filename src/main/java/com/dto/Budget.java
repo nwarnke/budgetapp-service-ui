@@ -5,36 +5,12 @@ import java.util.List;
 
 public class Budget {
     private Integer budgetId;
-    private String name;
+    private String budgetName;
+    private Integer budgetExpenses;
+    private Integer budgetLimit;
     private List<Category> categories;
-    private Integer limit;
-    private Integer currentAmount;
     private Date startDate;
     private Date endDate;
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Integer getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(Integer currentAmount) {
-        this.currentAmount = currentAmount;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
 
     public Integer getBudgetId() {
         return budgetId;
@@ -44,12 +20,28 @@ public class Budget {
         this.budgetId = budgetId;
     }
 
-    public Integer getLimit() {
-        return limit;
+    public String getBudgetName() {
+        return budgetName;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setBudgetName(String budgetName) {
+        this.budgetName = budgetName;
+    }
+
+    public Integer getBudgetExpenses() {
+        return budgetExpenses;
+    }
+
+    public void setBudgetExpenses(Integer budgetExpenses) {
+        this.budgetExpenses = budgetExpenses;
+    }
+
+    public Integer getBudgetLimit() {
+        return budgetLimit;
+    }
+
+    public void setBudgetLimit(Integer budgetLimit) {
+        this.budgetLimit = budgetLimit;
     }
 
     public List<Category> getCategories() {
@@ -60,11 +52,19 @@ public class Budget {
         this.categories = categories;
     }
 
-    public String getName() {
-        return name;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

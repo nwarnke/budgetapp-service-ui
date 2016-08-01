@@ -29,12 +29,8 @@ public class UserDao implements IUserDao {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setUserName(rs.getString("user_name"));
-            if(rs.getString("first_name") != null) {
-                user.setFirstName(rs.getString("first_name"));
-            }
-            if(rs.getString("last_name") != null) {
-                user.setLastName(rs.getString("last_name"));
-            }
+            user.setFirstName(rs.getString("first_name"));
+            user.setLastName(rs.getString("last_name"));
             user.setUserId(rs.getString("user_id"));
             user.setPassword(rs.getString("user_password"));
             return user;

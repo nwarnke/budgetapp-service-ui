@@ -2,9 +2,13 @@ package com.controller;
 
 import com.dao.IBudgetDao;
 import com.dao.ICategoryDao;
+import com.dao.ISubcategoryDao;
 import com.dao.impl.BudgetDao;
 import com.dao.impl.CategoryDao;
+import com.dao.impl.SubcategoryDao;
 import com.dto.Budget;
+import com.dto.Category;
+import com.dto.Subcategory;
 import com.dto.User;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -14,7 +18,7 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
-import java.util.Date;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,6 +28,7 @@ public class BudgetControllerTest {
   private BudgetController budgetController;
   private IBudgetDao budgetDao;
   private ICategoryDao categoryDao;
+  private ISubcategoryDao subcategoryDao;
 
   @Before
   public void setUp() throws Exception {
@@ -31,22 +36,31 @@ public class BudgetControllerTest {
     context.setImposteriser(ClassImposteriser.INSTANCE);
     budgetDao = context.mock(BudgetDao.class);
     categoryDao = context.mock(CategoryDao.class);
-    budgetController = new BudgetController(budgetDao, categoryDao);
+    subcategoryDao = context.mock(SubcategoryDao.class);
+    budgetController = new BudgetController(budgetDao, categoryDao, subcategoryDao);
   }
 
   @Test
   public void testGetBudget() throws Exception {
     MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
     mockHttpServletRequest.getSession().setAttribute("authenticated", true);
-    final User user = createUser();
-    mockHttpServletRequest.getSession().setAttribute("userInfo", user);
-    final String budgetId = "12345";
+    final String budgetId = "4";
+    final String categoryId = "1";
+    final String secondCategoryId = "2";
     final Budget budget = createBudget();
+    final List<Category> categories = createCategories();
+    final List<Subcategory> subcategories = createSubcategories();
 
     context.checking(new Expectations() {
       {
-        oneOf(budgetDao).lookupBudget(with(budgetId), with(user.getUserId()));
+        oneOf(budgetDao).lookupBudget(with(budgetId));
         will(returnValue(budget));
+        oneOf(categoryDao).findCategoriesForBudgetId(with(budgetId));
+        will(returnValue(categories));
+        oneOf(subcategoryDao).findSubCategoriesForCategoryId(with(categoryId));
+        will(returnValue(subcategories));
+        oneOf(subcategoryDao).findSubCategoriesForCategoryId(with(secondCategoryId));
+        will(returnValue(subcategories));
       }
     });
 
@@ -74,12 +88,10 @@ public class BudgetControllerTest {
       }
     });
 
-
     final ResponseEntity responseEntity = budgetController.newBudget(mockHttpServletRequest, budgetName, amount, startDate, endDate);
     assertEquals(202, responseEntity.getStatusCodeValue());
     context.assertIsSatisfied();
   }
-
 
   private User createUser() {
     final User user = new User();
@@ -93,11 +105,52 @@ public class BudgetControllerTest {
 
   private Budget createBudget() {
     final Budget budget = new Budget();
-    budget.setBudgetId(12345);
-    budget.setCurrentAmount(1500);
+    budget.setBudgetId(4);
+    budget.setBudgetName("TestBudget");
+    budget.setBudgetExpenses(1500);
     budget.setStartDate(new Date());
     budget.setEndDate(new Date());
-    budget.setLimit(2000);
+    budget.setBudgetLimit(2000);
+    //budget.setCategories(createCategories());
     return budget;
+  }
+
+  private List<Category> createCategories(){
+    final List<Category> categories = new ArrayList<Category>();
+      final Category category = new Category();
+      category.setCategoryId(1);
+      category.setCategoryName("Car");
+      category.setCategoryExpenses(100);
+      category.setCategoryLimit(200);
+      //category.setSubcategories(createSubcategories());
+      categories.add(category);
+
+      final Category secondCategory = new Category();
+      secondCategory.setCategoryId(2);
+      secondCategory.setCategoryName("Food");
+      secondCategory.setCategoryExpenses(160);
+      secondCategory.setCategoryLimit(300);
+      //secondCategory.setSubcategories(null);
+      categories.add(secondCategory);
+      return categories;
+  }
+
+
+  private List<Subcategory> createSubcategories(){
+      final List<Subcategory> subcategories = new ArrayList<Subcategory>();
+      final Subcategory subcategory = new Subcategory();
+      subcategory.setSubcategoryId(1);
+      subcategory.setSubcategoryName("Gas");
+      subcategory.setSubcategoryExpenses(100);
+      subcategory.setSubcategoryLimit(50);
+      subcategories.add(subcategory);
+
+      final Subcategory secondSubcategory = new Subcategory();
+      secondSubcategory.setSubcategoryId(2);
+      secondSubcategory.setSubcategoryName("Misc");
+      secondSubcategory.setSubcategoryExpenses(0);
+      secondSubcategory.setSubcategoryLimit(100);
+      subcategories.add(secondSubcategory);
+      return subcategories;
   }
 }

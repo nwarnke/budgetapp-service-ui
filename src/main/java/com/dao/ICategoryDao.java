@@ -5,5 +5,5 @@ import com.dto.Category;
 import java.util.List;
 
 public interface ICategoryDao {
-    List<Category> findCategoriesForUser(String userId);
+    List<Category> findCategoriesForBudgetId(String budgetId);
 }
