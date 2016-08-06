@@ -1,6 +1,9 @@
 package com.controller;
 
 import com.dto.User;
+import com.service.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,15 @@ public class AccountController {
     public User getUserInfo(HttpServletRequest httpServletRequest){
 //        return (User) httpServletRequest.getSession().getAttribute("userInfo");
         return null; //TODO finish method
+    }
+
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity updateUserCredentials(HttpServletRequest request){
+        if(!Service.isAuthenticatedUser(request)){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return null; //TODO in the process of implementing method -- Nick
     }
 
 }
