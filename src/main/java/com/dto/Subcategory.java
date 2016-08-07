@@ -5,6 +5,7 @@ public class Subcategory {
     private String subcategoryName;
     private Integer subcategoryExpenses;
     private Integer subcategoryLimit;
+    private Integer parentId;
 
     public Integer getSubcategoryId() {
         return subcategoryId;
@@ -36,5 +37,13 @@ public class Subcategory {
 
     public void setSubcategoryLimit(Integer subcategoryLimit) {
         this.subcategoryLimit = subcategoryLimit;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }
