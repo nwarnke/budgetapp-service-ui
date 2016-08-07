@@ -11,6 +11,7 @@ public class Budget {
     private List<Category> categories;
     private Date startDate;
     private Date endDate;
+    private Integer parentId;
 
     public Integer getBudgetId() {
         return budgetId;
@@ -66,5 +67,13 @@ public class Budget {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }

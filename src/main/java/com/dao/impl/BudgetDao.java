@@ -21,35 +21,60 @@ public class BudgetDao implements IBudgetDao {
   @Override
   public List<Budget> getBudgets(String userId) {
     MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-    mapSqlParameterSource.addValue("userid", Integer.valueOf(userId));
-    return namedParameterJdbcTemplate.query("SELECT * FROM budget WHERE budget_id IN (SELECT budget_id FROM user_budgets WHERE user_id = :userid);", mapSqlParameterSource, budget);
+    mapSqlParameterSource.addValue("userId", Integer.valueOf(userId));
+    return namedParameterJdbcTemplate.query("SELECT * FROM budget b WHERE b.parent_id = :userId;",
+            mapSqlParameterSource, rowMapper);
 
-  }
-
-  @Override
-  public int addBudget(String budgetName, String limit, Date startDate, Date endDate, String userId) {
-    MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-    mapSqlParameterSource.addValue("budgetname", budgetName);
-    mapSqlParameterSource.addValue("limit", Integer.parseInt(limit));
-    mapSqlParameterSource.addValue("startdate", startDate);
-    mapSqlParameterSource.addValue("enddate", endDate);
-    mapSqlParameterSource.addValue("userid", Integer.parseInt(userId));
-    final int update = namedParameterJdbcTemplate.update("INSERT INTO budget (budget_id, budget_name, current_amount, budget_limit, budget_start_date, budget_end_date) VALUES (((SELECT max" +
-            "(budget_id) FROM budget)+1), :budgetname, 0, :limit, :startdate, :enddate); INSERT INTO user_budgets (user_id, budget_id) VALUES (:userid, (SELECT max(budget_id) FROM" +
-            " budget))", mapSqlParameterSource);
-    return update;
   }
 
   @Override
   public Budget lookupBudget(String budgetId) {
     MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-    mapSqlParameterSource.addValue("budgetid", Integer.valueOf(budgetId));
+    mapSqlParameterSource.addValue("budgetId", Integer.valueOf(budgetId));
     return namedParameterJdbcTemplate.queryForObject("SELECT * FROM budget b " +
-            "WHERE b.budget_id = :budgetid", mapSqlParameterSource, budget);
+            "WHERE b.budget_id = :budgetId", mapSqlParameterSource, rowMapper);
   }
 
+  @Override
+  public int addBudget(String budgetName, String limit, Date startDate, Date endDate, String userId) {
+    MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+    mapSqlParameterSource.addValue("budgetName", budgetName);
+    mapSqlParameterSource.addValue("limit", Integer.parseInt(limit));
+    mapSqlParameterSource.addValue("startDate", startDate);
+    mapSqlParameterSource.addValue("endDate", endDate);
+    mapSqlParameterSource.addValue("userId", Integer.parseInt(userId));
+      return namedParameterJdbcTemplate.update("INSERT INTO budget (budget_id, budget_name, current_amount, budget_limit, budget_start_date, budget_end_date, parent_id) " +
+              "VALUES (((SELECT max (budget_id) FROM budget)+1), :budgetName, 0, :limit, :startDate, :endDate, :userId);", mapSqlParameterSource);
+  }
 
-  private RowMapper<Budget> budget = new RowMapper<Budget>() {
+    @Override
+    public int updateBudget(String budgetId, String budgetName, String amount, String limit, Date startDate, Date endDate) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("budgetId", Integer.parseInt(budgetId));
+        mapSqlParameterSource.addValue("budgetName", budgetName);
+        mapSqlParameterSource.addValue("amount", Integer.parseInt(amount));
+        mapSqlParameterSource.addValue("limit", Integer.parseInt(limit));
+        mapSqlParameterSource.addValue("startDate", startDate);
+        mapSqlParameterSource.addValue("endDate", endDate);
+        return namedParameterJdbcTemplate.update("UPDATE budget SET budget_name = :budgetName, current_amount = :amount, " +
+                "budget_limit = :limit, budget_start_date = :startDate, budget_end_date = :endDate WHERE budget_id = :budgetId;", mapSqlParameterSource);
+    }
+
+    @Override
+    public int deleteBudgetByParentId(String parentId) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("parentId", Integer.parseInt(parentId));
+        return namedParameterJdbcTemplate.update("DELETE FROM budget WHERE parent_id = :parentId;", mapSqlParameterSource);
+    }
+
+    @Override
+    public int deleteBudget(String budgetId) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("budgetId", Integer.parseInt(budgetId));
+        return namedParameterJdbcTemplate.update("DELETE FROM budget WHERE budget_id = :budgetId;", mapSqlParameterSource);
+    }
+
+  private RowMapper<Budget> rowMapper = new RowMapper<Budget>() {
     @Override
     public Budget mapRow(ResultSet rs, int rowNum) throws SQLException {
       Budget budget = new Budget();
@@ -59,6 +84,7 @@ public class BudgetDao implements IBudgetDao {
       budget.setBudgetName(rs.getString("budget_name"));
       budget.setStartDate(rs.getDate("budget_start_date"));
       budget.setEndDate(rs.getDate("budget_end_date"));
+      budget.setParentId(rs.getInt("parent_id"));
       return budget;
     }
   };

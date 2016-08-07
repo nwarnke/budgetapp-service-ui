@@ -9,7 +9,13 @@ public interface IBudgetDao {
 
     List<Budget> getBudgets(String userId);
 
+    Budget lookupBudget(String budgetId);
+
     int addBudget(String budgetName, String amount, Date startDate, Date endDate, String userId);
 
-    Budget lookupBudget(String budgetId);
+    int updateBudget(String budgetId,String budgetName, String amount, String limit, Date startDate, Date endDate);
+
+    int deleteBudgetByParentId(String parentId);
+
+    int deleteBudget(String budgetId);
 }
