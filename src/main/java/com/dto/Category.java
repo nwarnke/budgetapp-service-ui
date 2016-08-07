@@ -8,6 +8,7 @@ public class Category {
     private Integer categoryExpenses;
     private Integer categoryLimit;
     private List<Subcategory> subcategories;
+    private Integer parentId;
 
     public Integer getCategoryId() {
         return categoryId;
@@ -47,5 +48,13 @@ public class Category {
 
     public void setSubcategories(List<Subcategory> subcategories) {
         this.subcategories = subcategories;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }
