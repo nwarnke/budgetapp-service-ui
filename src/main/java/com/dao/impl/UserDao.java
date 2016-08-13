@@ -1,3 +1,4 @@
+
 package com.dao.impl;
 
 import com.dao.IUserDao;
@@ -16,12 +17,21 @@ public class UserDao implements IUserDao {
     public UserDao(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
-
     @Override
     public List<User> getUserPassword(String username){
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("username", username);
         return namedParameterJdbcTemplate.query("select * from app_user where user_id in (select DISTINCT user_id from app_user where user_name = :username)", mapSqlParameterSource, rowMapper);
+    }
+
+    @Override
+    public boolean updateUserInfo(String username, String newPassword, String oldPassword) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("username", username);
+        mapSqlParameterSource.addValue("newPassword", newPassword);
+        mapSqlParameterSource.addValue("oldPassword", oldPassword);
+        final int update = namedParameterJdbcTemplate.update("update app_user set user_password = :new_password where user_name = :username and user_password=:oldPassword", mapSqlParameterSource);
+        return (update != 0);
     }
 
     RowMapper<User> rowMapper = new RowMapper<User>() {
@@ -36,5 +46,4 @@ public class UserDao implements IUserDao {
             return user;
         }
     };
-
 }
