@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.dto.User;
+import com.service.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,36 +25,41 @@ public class AccountController {
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     @ResponseBody
-    public User getUserInfo(HttpServletRequest httpServletRequest){
+    public User getUserInfo(HttpServletRequest httpServletRequest) {
 //        return (User) httpServletRequest.getSession().getAttribute("userInfo");
-        return null; //TODO finish method
+        return null;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity updateUserInfo(HttpServletRequest httpServletRequest,
-                               @RequestParam("username") String username,
-                               @RequestParam("newPassword") String newPassword,
-                               @RequestParam("oldPassword") String oldPassword){
-       boolean updated = userDao.updateUserInfo(username,newPassword,oldPassword);
-        if(updated) {
+                                         @RequestParam("newPassword") String newPassword,
+                                         @RequestParam("oldPassword") String oldPassword) {
+        if (!Service.isAuthenticatedUser(httpServletRequest)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        boolean updated = userDao.updateUserInfo(((User) httpServletRequest.getSession().getAttribute("userInfo")).getUserName(), newPassword, oldPassword);
+        if (updated) {
             return new ResponseEntity(HttpStatus.ACCEPTED);
-        }else{
+        } else {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity saveUserInfo(HttpServletRequest httpServletRequest,
-                                         @RequestParam("firstname") String firstname,
-                                         @RequestParam("lastname") String lastname,
-                                         @RequestParam("username") String username,
-                                       @RequestParam("userid") int userid){
-        boolean updated = userDao.saveUserInfo(firstname,lastname,username, userid);
-        if(updated) {
+                                       @RequestParam("firstname") String firstname,
+                                       @RequestParam("lastname") String lastname,
+                                       @RequestParam("username") String username,
+                                       @RequestParam("userid") int userid) {
+        if (!Service.isAuthenticatedUser(httpServletRequest)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        boolean updated = userDao.saveUserInfo(firstname, lastname, username, userid);
+        if (updated) {
             return new ResponseEntity(HttpStatus.ACCEPTED);
-        }else{
+        } else {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

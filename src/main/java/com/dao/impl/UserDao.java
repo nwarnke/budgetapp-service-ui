@@ -30,7 +30,7 @@ public class UserDao implements IUserDao {
         mapSqlParameterSource.addValue("username", username);
         mapSqlParameterSource.addValue("newPassword", newPassword);
         mapSqlParameterSource.addValue("oldPassword", oldPassword);
-        final int update = namedParameterJdbcTemplate.update("update app_user set user_password = :new_password where user_name = :username and user_password=:oldPassword", mapSqlParameterSource);
+        final int update = namedParameterJdbcTemplate.update("update app_user set user_password = :newPassword where user_name = :username and user_password=:oldPassword", mapSqlParameterSource);
         return (update != 0);
     }
 
