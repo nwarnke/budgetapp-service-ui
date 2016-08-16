@@ -34,6 +34,18 @@ public class UserDao implements IUserDao {
         return (update != 0);
     }
 
+    @Override
+    public boolean saveUserInfo(String firstname, String lastname, String username, int userid) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("firstname", firstname);
+        mapSqlParameterSource.addValue("lastname", lastname);
+        mapSqlParameterSource.addValue("username", username);
+        mapSqlParameterSource.addValue("userid", userid);
+        final int update = namedParameterJdbcTemplate.update("update app_user set user_name = :username, last_name = :lastname, first_name = firstname,  where user_id = :userid", mapSqlParameterSource);
+        return (update != 0);
+    }
+
+
     RowMapper<User> rowMapper = new RowMapper<User>() {
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {

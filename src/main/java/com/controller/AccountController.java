@@ -43,4 +43,18 @@ public class AccountController {
         }
     }
 
+    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity saveUserInfo(HttpServletRequest httpServletRequest,
+                                         @RequestParam("firstname") String firstname,
+                                         @RequestParam("lastname") String lastname,
+                                         @RequestParam("username") String username,
+                                       @RequestParam("userid") int userid){
+        boolean updated = userDao.saveUserInfo(firstname,lastname,username, userid);
+        if(updated) {
+            return new ResponseEntity(HttpStatus.ACCEPTED);
+        }else{
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
